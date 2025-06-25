@@ -112,6 +112,7 @@ Changelog:
 - June 25, 2025. Initial setup
 - June 25, 2025. Enhanced projects section with images, added EdQuiz project, added technology icons to skills
 - June 25, 2025. Improved responsiveness across all screen sizes, optimized project card layouts, removed skills overview cards
+- June 25, 2025. Added live links for projects and coding platform profiles
 ```
 
 ## User Preferences

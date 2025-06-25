@@ -9,7 +9,7 @@ export default function AchievementsSection() {
       description: "Maximum Rating Achieved",
       icon: <Code className="text-3xl text-white" />,
       gradient: "from-blue-500 to-blue-300",
-      url: "#",
+      url: "https://codeforces.com/profile/nithineruventi",
     },
     {
       platform: "CodeChef",
@@ -18,7 +18,7 @@ export default function AchievementsSection() {
       description: "Maximum Rating Achieved",
       icon: <Trophy className="text-3xl text-white" />,
       gradient: "from-orange-500 to-yellow-400",
-      url: "#",
+      url: "https://www.codechef.com/users/nithineruventi",
     },
     {
       platform: "LeetCode",
@@ -27,7 +27,7 @@ export default function AchievementsSection() {
       description: "Problem Solving Excellence",
       icon: <TrendingUp className="text-3xl text-white" />,
       gradient: "from-green-500 to-emerald-400",
-      url: "#",
+      url: "https://leetcode.com/u/Nithinkumar_1/",
     },
   ];
 
@@ -68,6 +68,8 @@ export default function AchievementsSection() {
                 <p className="mb-2">{achievement.description}</p>
                 <a
                   href={achievement.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-[hsl(195,100%,50%)] hover:underline inline-block font-medium"
                 >
                   View Profile →

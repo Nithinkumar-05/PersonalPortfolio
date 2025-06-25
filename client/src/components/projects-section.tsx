@@ -31,6 +31,7 @@ export default function ProjectsSection() {
       gradient: "from-[hsl(195,100%,50%)] to-[hsl(180,100%,50%)]",
       features: ["Real-time alerts", "Lab allocation", "Inventory tracking"],
       image: "/attached_assets/LabGear_1750868043502.png",
+      repoLink: "https://github.com/Nithinkumar-05/LabGear.git",
     },
     {
       title: "Ride Share",
@@ -46,6 +47,7 @@ export default function ProjectsSection() {
       gradient: "from-purple-600 to-pink-600",
       features: ["Google Maps API", "Real-time routing", "Location autocomplete"],
       image: "/attached_assets/RideShare_1750868043505.png",
+      link: "https://rideshare-carpooling.vercel.app/",
     },
   ];
 
@@ -144,7 +146,7 @@ export default function ProjectsSection() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex space-x-3 w-full sm:w-auto">
+                  <div className="flex space-x-2 w-full sm:w-auto">
                     {project.link ? (
                       <a
                         href={project.link}
@@ -154,6 +156,16 @@ export default function ProjectsSection() {
                       >
                         <ExternalLink size={16} />
                         View Live
+                      </a>
+                    ) : project.repoLink ? (
+                      <a
+                        href={project.repoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`bg-gradient-to-r ${project.gradient} text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 text-sm lg:text-base flex-1 sm:flex-none`}
+                      >
+                        <Github size={16} />
+                        View Code
                       </a>
                     ) : (
                       <button
