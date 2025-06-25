@@ -1,8 +1,26 @@
-import { ExternalLink, Github, Smartphone, Globe, Database, Map } from "lucide-react";
-import { SiReact, SiFirebase, SiNodedotjs } from "react-icons/si";
+import { ExternalLink, Github, Smartphone, Globe, Database, Map, Brain } from "lucide-react";
+import { SiReact, SiFirebase, SiNodedotjs, SiExpress, SiMongodb, SiTailwindcss } from "react-icons/si";
 
 export default function ProjectsSection() {
   const projects = [
+    {
+      title: "EdQuiz",
+      subtitle: "A Quiz Application",
+      description:
+        "Created a web application that enables users to create, manage, and participate in quiz contests. Implemented features such as quiz creation and link sharing to simplify participant access. Facilitated real-time score calculation and result storage with detailed analytics for quiz creators.",
+      technologies: ["ReactJS", "NodeJS", "ExpressJS", "MongoDB", "TailwindCSS"],
+      techIcons: [
+        <SiReact key="react" />,
+        <SiNodedotjs key="node" />,
+        <SiExpress key="express" />,
+        <SiMongodb key="mongo" />,
+        <SiTailwindcss key="tailwind" />,
+      ],
+      gradient: "from-emerald-600 to-teal-600",
+      features: ["Quiz creation", "Link sharing", "Real-time scoring", "Analytics"],
+      link: "https://quized.vercel.app/",
+      image: null,
+    },
     {
       title: "LabGear",
       subtitle: "Lab Inventory Management System",
@@ -12,6 +30,7 @@ export default function ProjectsSection() {
       techIcons: [<SiReact key="react" />, <SiFirebase key="firebase" />],
       gradient: "from-[hsl(195,100%,50%)] to-[hsl(180,100%,50%)]",
       features: ["Real-time alerts", "Lab allocation", "Inventory tracking"],
+      image: "/attached_assets/LabGear_1750868043502.png",
     },
     {
       title: "Ride Share",
@@ -22,10 +41,11 @@ export default function ProjectsSection() {
       techIcons: [
         <SiReact key="react" />,
         <SiNodedotjs key="node" />,
-        <Database key="mongo" />,
+        <SiMongodb key="mongo" />,
       ],
       gradient: "from-purple-600 to-pink-600",
       features: ["Google Maps API", "Real-time routing", "Location autocomplete"],
+      image: "/attached_assets/RideShare_1750868043505.png",
     },
   ];
 
@@ -42,30 +62,46 @@ export default function ProjectsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
               className="project-card glass-effect rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
-              <div
-                className={`h-64 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="h-64 relative overflow-hidden bg-gray-900">
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className={`h-full bg-gradient-to-br ${project.gradient}`}
+                  ></div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-4 left-4">
                   <div className="flex space-x-2 flex-wrap">
-                    {project.technologies.map((tech, techIndex) => (
+                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className={`bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium`}
+                        className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium"
                       >
                         {tech}
                       </span>
                     ))}
+                    {project.technologies.length > 3 && (
+                      <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                        +{project.technologies.length - 3}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="absolute top-4 right-4">
                   {index === 0 ? (
+                    <Brain size={32} className="text-white/80" />
+                  ) : index === 1 ? (
                     <Smartphone size={32} className="text-white/80" />
                   ) : (
                     <Map size={32} className="text-white/80" />
@@ -107,12 +143,24 @@ export default function ProjectsSection() {
                     ))}
                   </div>
                   <div className="flex space-x-3">
-                    <button
-                      className={`bg-gradient-to-r ${project.gradient} text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2`}
-                    >
-                      <ExternalLink size={16} />
-                      View Details
-                    </button>
+                    {project.link ? (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`bg-gradient-to-r ${project.gradient} text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2`}
+                      >
+                        <ExternalLink size={16} />
+                        View Live
+                      </a>
+                    ) : (
+                      <button
+                        className={`bg-gradient-to-r ${project.gradient} text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2`}
+                      >
+                        <ExternalLink size={16} />
+                        View Details
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

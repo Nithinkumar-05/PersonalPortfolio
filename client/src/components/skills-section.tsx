@@ -1,4 +1,21 @@
 import { Code, Palette, Server, Database } from "lucide-react";
+import { 
+  SiCplusplus, 
+  SiPython, 
+  SiJavascript, 
+  SiHtml5, 
+  SiCss3, 
+  SiBootstrap, 
+  SiTailwindcss, 
+  SiReact, 
+  SiNodedotjs, 
+  SiExpress, 
+  SiSpringboot, 
+  SiMysql, 
+  SiMongodb, 
+  SiGit, 
+  SiSelenium 
+} from "react-icons/si";
 
 export default function SkillsSection() {
   const skillCategories = [
@@ -6,41 +23,41 @@ export default function SkillsSection() {
       title: "Languages",
       icon: <Code className="text-4xl text-[hsl(195,100%,50%)] mb-4" />,
       skills: [
-        { name: "C/C++", color: "from-blue-600 to-blue-400" },
-        { name: "Python", color: "from-yellow-600 to-yellow-400" },
-        { name: "Java", color: "from-red-600 to-red-400" },
-        { name: "JavaScript", color: "from-yellow-500 to-yellow-300" },
+        { name: "C/C++", color: "from-blue-600 to-blue-400", icon: <SiCplusplus /> },
+        { name: "Python", color: "from-yellow-600 to-yellow-400", icon: <SiPython /> },
+        { name: "Java", color: "from-red-600 to-red-400", icon: <Code size={16} /> },
+        { name: "JavaScript", color: "from-yellow-500 to-yellow-300", icon: <SiJavascript /> },
       ],
     },
     {
       title: "Frontend",
       icon: <Palette className="text-4xl text-[hsl(180,100%,50%)] mb-4" />,
       skills: [
-        { name: "HTML/CSS", color: "from-orange-600 to-orange-400" },
-        { name: "Bootstrap", color: "from-purple-600 to-purple-400" },
-        { name: "TailwindCSS", color: "from-teal-600 to-teal-400" },
-        { name: "ReactJS", color: "from-blue-500 to-blue-300" },
-        { name: "React Native", color: "from-indigo-600 to-indigo-400" },
+        { name: "HTML/CSS", color: "from-orange-600 to-orange-400", icon: <SiHtml5 /> },
+        { name: "Bootstrap", color: "from-purple-600 to-purple-400", icon: <SiBootstrap /> },
+        { name: "TailwindCSS", color: "from-teal-600 to-teal-400", icon: <SiTailwindcss /> },
+        { name: "ReactJS", color: "from-blue-500 to-blue-300", icon: <SiReact /> },
+        { name: "React Native", color: "from-indigo-600 to-indigo-400", icon: <SiReact /> },
       ],
     },
     {
       title: "Backend",
       icon: <Server className="text-4xl text-purple-400 mb-4" />,
       skills: [
-        { name: "NodeJS", color: "from-green-600 to-green-400" },
-        { name: "ExpressJS", color: "from-gray-700 to-gray-500" },
-        { name: "Spring Boot", color: "from-green-500 to-green-300" },
+        { name: "NodeJS", color: "from-green-600 to-green-400", icon: <SiNodedotjs /> },
+        { name: "ExpressJS", color: "from-gray-700 to-gray-500", icon: <SiExpress /> },
+        { name: "Spring Boot", color: "from-green-500 to-green-300", icon: <SiSpringboot /> },
       ],
     },
     {
       title: "Tools & DB",
       icon: <Database className="text-4xl text-pink-400 mb-4" />,
       skills: [
-        { name: "MySQL", color: "from-blue-700 to-blue-500" },
-        { name: "MongoDB", color: "from-green-700 to-green-500" },
-        { name: "Git", color: "from-orange-700 to-orange-500" },
-        { name: "REST APIs", color: "from-red-700 to-red-500" },
-        { name: "Selenium", color: "from-purple-700 to-purple-500" },
+        { name: "MySQL", color: "from-blue-700 to-blue-500", icon: <SiMysql /> },
+        { name: "MongoDB", color: "from-green-700 to-green-500", icon: <SiMongodb /> },
+        { name: "Git", color: "from-orange-700 to-orange-500", icon: <SiGit /> },
+        { name: "REST APIs", color: "from-red-700 to-red-500", icon: <Code size={16} /> },
+        { name: "Selenium", color: "from-purple-700 to-purple-500", icon: <SiSelenium /> },
       ],
     },
   ];
@@ -75,8 +92,9 @@ export default function SkillsSection() {
                 {category.skills.map((skill, skillIndex) => (
                   <div
                     key={skillIndex}
-                    className={`skill-badge bg-gradient-to-r ${skill.color} text-white px-4 py-2 rounded-full text-center text-sm font-medium`}
+                    className={`skill-badge bg-gradient-to-r ${skill.color} text-white px-4 py-2 rounded-full text-center text-sm font-medium flex items-center justify-center gap-2`}
                   >
+                    <span className="text-lg">{skill.icon}</span>
                     {skill.name}
                   </div>
                 ))}
