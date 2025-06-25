@@ -76,26 +76,59 @@ export default function SkillsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Skills Overview Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className="glass-effect rounded-2xl p-6 hover:shadow-2xl transition-all duration-300"
+              className="glass-effect rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 group"
             >
-              <div className="text-center mb-6">
-                {category.icon}
-                <h3 className="text-xl font-semibold text-white">
+              <div className="text-center mb-4">
+                <div className="mb-3 group-hover:scale-110 transition-transform duration-300">
+                  {category.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">
                   {category.title}
                 </h3>
+                <div className="text-sm text-gray-400">
+                  {category.skills.length} Technologies
+                </div>
               </div>
-              <div className="space-y-3">
+            </div>
+          ))}
+        </div>
+
+        {/* Detailed Skills Grid */}
+        <div className="space-y-12">
+          {skillCategories.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="glass-effect rounded-2xl p-8">
+              <div className="flex items-center justify-center mb-8">
+                <div className="flex items-center gap-4">
+                  <div className="text-3xl">{category.icon}</div>
+                  <h3 className="text-3xl font-bold gradient-text">
+                    {category.title}
+                  </h3>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {category.skills.map((skill, skillIndex) => (
                   <div
                     key={skillIndex}
-                    className={`skill-badge bg-gradient-to-r ${skill.color} text-white px-4 py-2 rounded-full text-center text-sm font-medium flex items-center justify-center gap-2`}
+                    className="group relative"
                   >
-                    <span className="text-lg">{skill.icon}</span>
-                    {skill.name}
+                    <div
+                      className={`skill-badge bg-gradient-to-r ${skill.color} text-white p-4 rounded-xl text-center font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg border border-white/10`}
+                    >
+                      <div className="flex flex-col items-center gap-3">
+                        <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
+                          {skill.icon}
+                        </span>
+                        <span className="text-sm font-semibold">
+                          {skill.name}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
