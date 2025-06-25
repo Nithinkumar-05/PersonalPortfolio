@@ -76,27 +76,7 @@ export default function SkillsSection() {
           </p>
         </div>
 
-        {/* Skills Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {skillCategories.map((category, index) => (
-            <div
-              key={index}
-              className="glass-effect rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 group"
-            >
-              <div className="text-center mb-4">
-                <div className="mb-3 group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  {category.title}
-                </h3>
-                <div className="text-sm text-gray-400">
-                  {category.skills.length} Technologies
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        
 
         {/* Detailed Skills Grid */}
         <div className="space-y-12">

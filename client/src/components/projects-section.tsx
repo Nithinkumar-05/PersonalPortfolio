@@ -19,7 +19,7 @@ export default function ProjectsSection() {
       gradient: "from-emerald-600 to-teal-600",
       features: ["Quiz creation", "Link sharing", "Real-time scoring", "Analytics"],
       link: "https://quized.vercel.app/",
-      image: null,
+      image: "/attached_assets/Edquiz_1750869014841.png",
     },
     {
       title: "LabGear",
