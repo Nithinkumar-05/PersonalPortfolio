@@ -30,7 +30,7 @@ export default function Navigation() {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold gradient-text">NK</div>
+          <div className="text-2xl font-bold gradient-text"><button className="border-none" onClick={()=>scrollToSection("home")}>ENK</button></div>
           
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
