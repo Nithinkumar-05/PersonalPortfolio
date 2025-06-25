@@ -111,6 +111,7 @@ This is a full-stack portfolio web application built with React and Node.js. The
 Changelog:
 - June 25, 2025. Initial setup
 - June 25, 2025. Enhanced projects section with images, added EdQuiz project, added technology icons to skills
+- June 25, 2025. Improved responsiveness across all screen sizes, optimized project card layouts, removed skills overview cards
 ```
 
 ## User Preferences

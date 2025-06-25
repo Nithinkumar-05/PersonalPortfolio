@@ -62,11 +62,11 @@ export default function ProjectsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="project-card glass-effect rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300"
+              className="project-card glass-effect rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col h-full"
             >
               <div className="h-64 relative overflow-hidden bg-gray-900">
                 {project.image ? (
@@ -109,53 +109,55 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 mb-4">{project.subtitle}</p>
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  {project.description}
-                </p>
+              <div className="p-6 lg:p-8 flex flex-col h-full">
+                <div className="flex-grow">
+                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-400 mb-4 text-sm lg:text-base">{project.subtitle}</p>
+                  <p className="text-gray-300 mb-6 leading-relaxed text-sm lg:text-base">
+                    {project.description}
+                  </p>
 
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">
-                    Key Features
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.features.map((feature, featureIndex) => (
-                      <span
-                        key={featureIndex}
-                        className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-sm"
-                      >
-                        {feature}
-                      </span>
-                    ))}
+                  <div className="mb-6">
+                    <h4 className="text-xs lg:text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">
+                      Key Features
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.features.map((feature, featureIndex) => (
+                        <span
+                          key={featureIndex}
+                          className="bg-gray-800 text-gray-300 px-2 py-1 lg:px-3 lg:py-1 rounded-full text-xs lg:text-sm"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex space-x-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-auto">
+                  <div className="flex space-x-3 lg:space-x-4">
                     {project.techIcons.map((icon, iconIndex) => (
-                      <div key={iconIndex} className="text-2xl text-gray-400">
+                      <div key={iconIndex} className="text-xl lg:text-2xl text-gray-400">
                         {icon}
                       </div>
                     ))}
                   </div>
-                  <div className="flex space-x-3">
+                  <div className="flex space-x-3 w-full sm:w-auto">
                     {project.link ? (
                       <a
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`bg-gradient-to-r ${project.gradient} text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2`}
+                        className={`bg-gradient-to-r ${project.gradient} text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 text-sm lg:text-base flex-1 sm:flex-none`}
                       >
                         <ExternalLink size={16} />
                         View Live
                       </a>
                     ) : (
                       <button
-                        className={`bg-gradient-to-r ${project.gradient} text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2`}
+                        className={`bg-gradient-to-r ${project.gradient} text-white px-3 py-2 lg:px-4 lg:py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 text-sm lg:text-base flex-1 sm:flex-none`}
                       >
                         <ExternalLink size={16} />
                         View Details
