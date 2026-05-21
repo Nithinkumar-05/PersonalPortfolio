@@ -12,18 +12,29 @@ import CursorGlow from "@/components/cursor-glow";
 
 export default function Portfolio() {
   return (
-    <div className="min-h-screen bg-[hsl(240,64%,9%)] text-white overflow-x-hidden">
-      <CursorGlow />
-      <Navigation />
-      <PlaneNavigator />
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <ExperienceSection />
-      <ProjectsSection />
-      <AchievementsSection />
-      <ContactSection />
-      <Footer />
-    </div>
+    <>
+      {/* Skip to main content — first focusable element on page */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+      <div className="min-h-screen bg-[hsl(240,64%,9%)] text-white overflow-x-hidden">
+        <CursorGlow />
+        <Navigation />
+        <PlaneNavigator />
+
+        <main id="main-content" tabIndex={-1}>
+          <HeroSection />
+          <AboutSection />
+          <SkillsSection />
+          <ExperienceSection />
+          <ProjectsSection />
+          <AchievementsSection />
+          <ContactSection />
+        </main>
+
+        <Footer />
+      </div>
+    </>
   );
 }
