@@ -1,216 +1,177 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import ParticleCanvas from "./particle-canvas";
 
 const profileImage = "/attached_assets/_2_1750867289099.JPG";
 
 const ROLES = [
   "Full Stack Developer",
-  "Problem Solver",
   "Competitive Programmer",
+  "Problem Solver",
   "UI/UX Enthusiast",
 ];
 
-const STARS = Array.from({ length: 60 }, (_, i) => ({
+const STARS = Array.from({ length: 50 }, (_, i) => ({
   id: i,
   top: Math.random() * 100,
   left: Math.random() * 100,
-  size: Math.random() * 2.5 + 0.5,
+  size: Math.random() * 2 + 0.5,
   dur: (Math.random() * 3 + 2).toFixed(1),
-  delay: (Math.random() * 4).toFixed(1),
+  delay: (Math.random() * 5).toFixed(1),
 }));
 
 export default function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [deleting, setDeleting] = useState(false);
-  const [heroVisible, setHeroVisible] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [visible, setVisible] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-  // Typewriter
+  useEffect(() => { setTimeout(() => setVisible(true), 80); }, []);
+
   useEffect(() => {
-    const current = ROLES[roleIndex];
+    const cur = ROLES[roleIndex];
     if (!deleting) {
-      if (displayed.length < current.length) {
-        timeoutRef.current = setTimeout(
-          () => setDisplayed(current.slice(0, displayed.length + 1)),
-          80
-        );
+      if (displayed.length < cur.length) {
+        timerRef.current = setTimeout(() => setDisplayed(cur.slice(0, displayed.length + 1)), 75);
       } else {
-        timeoutRef.current = setTimeout(() => setDeleting(true), 1800);
+        timerRef.current = setTimeout(() => setDeleting(true), 1800);
       }
     } else {
       if (displayed.length > 0) {
-        timeoutRef.current = setTimeout(
-          () => setDisplayed(displayed.slice(0, -1)),
-          45
-        );
+        timerRef.current = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
       } else {
         setDeleting(false);
-        setRoleIndex((i) => (i + 1) % ROLES.length);
+        setRoleIndex(i => (i + 1) % ROLES.length);
       }
     }
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [displayed, deleting, roleIndex]);
 
-  // Entrance animation
-  useEffect(() => {
-    const t = setTimeout(() => setHeroVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
-    <section
-      id="home"
-      className="min-h-screen animated-bg flex items-center justify-center relative overflow-hidden"
-    >
-      {/* Star field */}
-      {STARS.map((s) => (
-        <span
-          key={s.id}
-          className="star pointer-events-none"
-          style={{
-            top: `${s.top}%`,
-            left: `${s.left}%`,
-            width: `${s.size}px`,
-            height: `${s.size}px`,
-            "--dur": `${s.dur}s`,
-            "--delay": `${s.delay}s`,
-          } as React.CSSProperties}
-        />
+    <section id="home" className="min-h-screen animated-bg flex items-center justify-center relative overflow-hidden">
+
+      {/* Particle field */}
+      <ParticleCanvas />
+
+      {/* Stars */}
+      {STARS.map(s => (
+        <span key={s.id} className="star pointer-events-none"
+          style={{ top: `${s.top}%`, left: `${s.left}%`, width: s.size, height: s.size,
+            "--dur": `${s.dur}s`, "--delay": `${s.delay}s` } as React.CSSProperties} />
       ))}
 
-      {/* Ambient blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-16 left-16 w-80 h-80 bg-[hsl(195,100%,50%)] rounded-full mix-blend-multiply filter blur-[100px] opacity-10 float-animation" />
-        <div className="absolute top-1/3 right-12 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-[100px] opacity-10 float-animation" style={{ animationDelay: "2s" }} />
-        <div className="absolute bottom-16 left-1/3 w-72 h-72 bg-[hsl(180,100%,50%)] rounded-full mix-blend-multiply filter blur-[100px] opacity-10 float-animation" style={{ animationDelay: "4s" }} />
+      {/* Scanline effect */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
+        <div className="absolute w-full h-8 bg-gradient-to-b from-[hsl(195,100%,50%)] to-transparent"
+          style={{ animation: "scanline 8s linear infinite" }} />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16">
+      {/* Grid overlay */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ backgroundImage: "linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px)",
+          backgroundSize: "60px 60px" }} />
 
-          {/* Text side */}
-          <div
-            className={`order-2 lg:order-1 max-w-2xl text-center lg:text-left transition-all duration-1000 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <p
-              className="text-[hsl(195,100%,50%)] font-mono text-sm md:text-base mb-3 tracking-widest uppercase animate-fadeInLeft"
-              style={{ animationDelay: "0.1s" }}
-            >
-              👋 Hello, World!
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20">
+
+          {/* ── Text ── */}
+          <div className={`order-2 lg:order-1 max-w-2xl text-center lg:text-left transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+
+            <p className="text-[hsl(195,100%,50%)] font-mono text-sm tracking-[0.3em] uppercase mb-4 animate-fadeInLeft" style={{ animationDelay: ".1s" }}>
+              👋 &nbsp;Hello, World
             </p>
 
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 animate-fadeInUp leading-tight"
-              style={{ animationDelay: "0.2s" }}
-            >
-              I'm{" "}
-              <span className="gradient-text">Nithin Kumar</span>
+            {/* Glitch name */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-2 leading-none animate-fadeInUp" style={{ animationDelay: ".2s" }}>
+              I'm
             </h1>
+            <div className="relative mb-6 animate-fadeInUp" style={{ animationDelay: ".3s" }}>
+              <span
+                className="glitch text-5xl sm:text-6xl lg:text-7xl font-black gradient-text block"
+                data-text="Nithin Kumar"
+              >
+                Nithin Kumar
+              </span>
+            </div>
 
-            {/* Typewriter role */}
-            <div
-              className="text-lg sm:text-xl lg:text-2xl mb-6 font-mono animate-fadeInUp"
-              style={{ animationDelay: "0.35s" }}
-            >
-              <span className="text-gray-300">&gt; </span>
+            {/* Typewriter */}
+            <div className="font-mono text-base sm:text-lg lg:text-xl mb-8 animate-fadeInUp h-8" style={{ animationDelay: ".4s" }}>
+              <span className="text-gray-500">&gt; &nbsp;</span>
               <span className="text-[hsl(180,100%,50%)]">{displayed}</span>
               <span className="typewriter-cursor" />
             </div>
 
-            <p
-              className="text-base sm:text-lg text-gray-400 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 animate-fadeInUp"
-              style={{ animationDelay: "0.5s" }}
-            >
-              Motivated CSE graduate with hands-on experience in full-stack
-              development and prompt engineering. Passionate about building
-              robust, scalable solutions and innovative projects.
+            <p className="text-gray-400 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0 animate-fadeInUp" style={{ animationDelay: ".55s" }}>
+              Motivated CSE graduate with hands-on experience in full‑stack development and
+              prompt engineering. Passionate about building robust, scalable solutions and
+              innovative products.
             </p>
 
-            <div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fadeInUp"
-              style={{ animationDelay: "0.65s" }}
-            >
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="group relative overflow-hidden bg-gradient-to-r from-[hsl(195,100%,50%)] to-[hsl(180,100%,50%)] text-[hsl(240,64%,9%)] px-8 py-3 rounded-full font-bold hover:shadow-[0_0_30px_hsl(195,100%,50%)] transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Get In Touch <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </span>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fadeInUp" style={{ animationDelay: ".7s" }}>
+              <button onClick={() => scrollTo("contact")}
+                className="group relative overflow-hidden px-8 py-3 rounded-full font-bold text-[hsl(240,64%,9%)] bg-gradient-to-r from-[hsl(195,100%,50%)] to-[hsl(180,100%,50%)] hover:shadow-[0_0_40px_hsl(195,100%,50%)] transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                Get In Touch <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button
-                onClick={() => scrollToSection("projects")}
-                className="border-2 border-[hsl(195,100%,50%)] text-[hsl(195,100%,50%)] px-8 py-3 rounded-full font-bold hover:bg-[hsl(195,100%,50%)]/10 hover:shadow-[0_0_20px_hsl(195,100%,50%)/30] transition-all duration-300"
-              >
-                View My Work
+              <button onClick={() => scrollTo("projects")}
+                className="px-8 py-3 rounded-full font-bold border-2 border-[hsl(195,100%,50%)]/50 text-[hsl(195,100%,50%)] hover:border-[hsl(195,100%,50%)] hover:bg-[hsl(195,100%,50%)]/10 hover:shadow-[0_0_20px_hsl(195,100%,50%)/30] transition-all duration-300">
+                View Work
               </button>
             </div>
 
-            {/* Stats row */}
-            <div
-              className="flex gap-8 mt-10 justify-center lg:justify-start animate-fadeInUp"
-              style={{ animationDelay: "0.8s" }}
-            >
+            {/* Stats */}
+            <div className="flex gap-8 mt-10 justify-center lg:justify-start animate-fadeInUp" style={{ animationDelay: ".85s" }}>
               {[
-                { value: "3+", label: "Projects" },
-                { value: "1657", label: "CodeChef Rating" },
-                { value: "8.4%", label: "LeetCode Top" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center lg:text-left">
-                  <div className="text-2xl font-bold gradient-text">{stat.value}</div>
-                  <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
+                { v: "3+",    l: "Projects Built" },
+                { v: "1657",  l: "CodeChef Rating" },
+                { v: "8.93",  l: "CGPA" },
+              ].map(s => (
+                <div key={s.l}>
+                  <div className="text-2xl font-black gradient-text">{s.v}</div>
+                  <div className="text-[10px] text-gray-500 uppercase tracking-widest mt-0.5">{s.l}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Image side */}
-          <div
-            className={`order-1 lg:order-2 transition-all duration-1000 delay-300 ${heroVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
-          >
-            <div className="relative">
+          {/* ── Photo ── */}
+          <div className={`order-1 lg:order-2 transition-all duration-1000 delay-300 ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}>
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center">
+
               {/* Orbit rings */}
-              <div
-                className="orbit-ring absolute"
-                style={{
-                  width: "320px", height: "320px",
-                  top: "50%", left: "50%",
-                  "--speed": "18s",
-                } as React.CSSProperties}
-              />
-              <div
-                className="orbit-ring absolute"
-                style={{
-                  width: "380px", height: "380px",
-                  top: "50%", left: "50%",
-                  "--speed": "28s",
-                  animationDirection: "reverse",
-                } as React.CSSProperties}
-              />
+              {[260, 310, 360].map((sz, i) => (
+                <div key={sz} className="orbit-ring absolute"
+                  style={{ width: sz, height: sz, top: "50%", left: "50%",
+                    "--speed": `${16 + i * 8}s`, animationDirection: i % 2 === 1 ? "reverse" : "normal"
+                  } as React.CSSProperties} />
+              ))}
 
-              {/* Profile photo */}
-              <div className="w-56 h-56 sm:w-72 sm:h-72 lg:w-64 lg:h-64 xl:w-72 xl:h-72 rounded-full overflow-hidden glow-animation relative z-10 border-2 border-[hsl(195,100%,50%)]/50">
-                <img
-                  src={profileImage}
-                  alt="Nithin Kumar"
-                  className="w-full h-full object-cover rounded-full"
-                />
+              {/* Pulse rings */}
+              {[1, 2].map(i => (
+                <div key={i} className="absolute inset-0 rounded-full border border-[hsl(195,100%,50%)]/30"
+                  style={{ animation: `pulse-ring ${1.5 + i * .7}s ease-out infinite`, animationDelay: `${i * .6}s` }} />
+              ))}
+
+              {/* Photo */}
+              <div className="relative z-10 w-52 h-52 sm:w-64 sm:h-64 rounded-full overflow-hidden glow-animation border-2 border-[hsl(195,100%,50%)]/60">
+                <img src={profileImage} alt="Nithin Kumar" className="w-full h-full object-cover" />
+                {/* Hologram overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[hsl(195,100%,50%)]/10 via-transparent to-purple-500/10" />
               </div>
 
-              {/* Floating badges */}
-              <div className="absolute -top-4 -left-6 bg-[hsl(240,64%,9%)] border border-[hsl(195,100%,50%)]/40 rounded-xl px-3 py-2 text-xs font-semibold text-[hsl(195,100%,50%)] float-animation shadow-lg backdrop-blur-sm z-20">
-                💻 Full Stack Dev
+              {/* Floating chips */}
+              <div className="absolute -top-2 -left-8 z-20 glass-effect rounded-xl px-3 py-2 text-xs font-bold text-[hsl(195,100%,50%)] border border-[hsl(195,100%,50%)]/30 float-animation shadow-[0_0_15px_hsl(195,100%,50%)/20]">
+                💻 Full Stack
               </div>
-              <div
-                className="absolute -bottom-4 -right-6 bg-[hsl(240,64%,9%)] border border-purple-400/40 rounded-xl px-3 py-2 text-xs font-semibold text-purple-400 float-animation shadow-lg backdrop-blur-sm z-20"
-                style={{ animationDelay: "1.5s" }}
-              >
+              <div className="absolute -bottom-2 -right-8 z-20 glass-effect rounded-xl px-3 py-2 text-xs font-bold text-purple-400 border border-purple-400/30 float-animation shadow-[0_0_15px_purple/20]"
+                style={{ animationDelay: "2s" }}>
                 🏆 Competitive Coder
+              </div>
+              <div className="absolute top-1/2 -right-10 z-20 glass-effect rounded-xl px-3 py-2 text-xs font-bold text-pink-400 border border-pink-400/30 float-animation"
+                style={{ animationDelay: "3.5s" }}>
+                ⚡ OpenText Intern
               </div>
             </div>
           </div>
@@ -218,11 +179,12 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-60">
-        <span className="text-xs text-gray-400 tracking-widest uppercase">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-[hsl(195,100%,50%)] to-transparent" />
-      </div>
+      {/* Scroll cue */}
+      <button onClick={() => scrollTo("about")}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 hover:text-[hsl(195,100%,50%)] transition-colors animate-bounce z-10">
+        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+        <ChevronDown size={18} />
+      </button>
     </section>
   );
 }

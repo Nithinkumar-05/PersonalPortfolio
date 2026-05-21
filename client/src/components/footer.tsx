@@ -1,55 +1,38 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
+
+const links = [
+  { icon: <Github size={18} />, href: "https://github.com/Nithinkumar-05", label: "GitHub" },
+  { icon: <Linkedin size={18} />, href: "https://linkedin.com/in/nithineruventi", label: "LinkedIn" },
+  { icon: <Mail size={18} />, href: "mailto:nithineruventi@gmail.com", label: "Email" },
+];
 
 export default function Footer() {
-  const socialLinks = [
-    {
-      icon: <Github className="text-xl" />,
-      href: "https://github.com/Nithinkumar-05",
-      label: "GitHub",
-    },
-    {
-      icon: <Linkedin className="text-xl" />,
-      href: "https://linkedin.com/in/nithineruventi",
-      label: "LinkedIn",
-    },
-    {
-      icon: <Mail className="text-xl" />,
-      href: "mailto:nithineruventi@gmail.com",
-      label: "Email",
-    },
-  ];
-
   return (
-    <footer className="bg-[hsl(235,32%,14%)] border-t border-gray-800 py-12">
-      <div className="container mx-auto px-6">
-        <div className="text-center">
-          <div className="text-3xl font-bold gradient-text mb-4">
-            Nithin Kumar
-          </div>
-          <p className="text-gray-400 mb-6">
-            Full Stack Developer & Problem Solver
-          </p>
+    <footer className="relative bg-[hsl(235,32%,10%)] border-t border-white/5 py-14 overflow-hidden">
+      {/* Glow behind */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-32 bg-[hsl(195,100%,50%)]/5 blur-3xl pointer-events-none rounded-full" />
 
-          <div className="flex justify-center space-x-6 mb-8">
-            {socialLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={link.label}
-                className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[hsl(195,100%,50%)] transition-colors duration-300"
-              >
-                {link.icon}
-              </a>
-            ))}
-          </div>
+      <div className="container mx-auto px-6 relative z-10 text-center">
+        <div className="text-4xl font-black gradient-text mb-2">NK</div>
+        <p className="text-gray-500 text-sm mb-8">Full Stack Developer &amp; Problem Solver</p>
 
-          <div className="border-t border-gray-800 pt-8">
-            <p className="text-gray-500">
-              &copy; 2024 Nithin Kumar. All rights reserved.
-            </p>
-          </div>
+        <div className="flex justify-center gap-4 mb-10">
+          {links.map(l => (
+            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" aria-label={l.label}
+              className="w-11 h-11 rounded-full glass-effect border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[hsl(195,100%,50%)]/50 hover:bg-[hsl(195,100%,50%)]/10 hover:shadow-[0_0_15px_hsl(195,100%,50%)/20] transition-all duration-300">
+              {l.icon}
+            </a>
+          ))}
+        </div>
+
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="inline-flex items-center gap-2 text-xs text-gray-600 hover:text-[hsl(195,100%,50%)] transition-colors mb-8 group">
+          <ArrowUp size={14} className="group-hover:-translate-y-1 transition-transform" />
+          Back to top
+        </button>
+
+        <div className="border-t border-white/5 pt-6">
+          <p className="text-gray-600 text-xs">© 2025 Nithin Kumar Eruventi. Built with React + TailwindCSS.</p>
         </div>
       </div>
     </footer>

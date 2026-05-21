@@ -8,10 +8,12 @@ import AchievementsSection from "@/components/achievements-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import PlaneNavigator from "@/components/plane-navigator";
+import CursorGlow from "@/components/cursor-glow";
 
 export default function Portfolio() {
   return (
     <div className="min-h-screen bg-[hsl(240,64%,9%)] text-white overflow-x-hidden">
+      <CursorGlow />
       <Navigation />
       <PlaneNavigator />
       <HeroSection />
